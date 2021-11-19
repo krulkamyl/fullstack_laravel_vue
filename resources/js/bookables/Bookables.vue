@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!loading">
+        <div v-if="loading">
             Data is loading...
         </div>
         <div v-else>
@@ -8,12 +8,12 @@
             class="row mb-4" 
             v-for="row in rows" 
             :key="'row'+row">
-                <div class="col" 
-                v-for="(bookable, column) in bookablesInRow(row)" 
-                :key="'column'+column">
+                <div class="col d-flex align-items-stretch" 
+                v-for="(bookable) in bookablesInRow(row)" 
+                :key="'column'+bookable.id">
                     <BookableListItem 
                     :item-title="bookable.title" 
-                    :item-content="bookable.content" 
+                    :item-description="bookable.description" 
                     :price="bookable.price" />
                 </div>
 
@@ -45,41 +45,32 @@
         },
         data() {
             return {
-                loading: false,
+                loading: true,
                 columns: 3,
-                bookables: [{
-                        title: "Example Bookable item",
-                        content: "Here is a offer for bookable item example",
-                        price: 1000
-                    },
-                    {
-                        title: "Example Bookable item",
-                        content: "Here is a offer for bookable item example",
-                        price: 900
-                    },
-                    {
-                        title: "Example Bookable item",
-                        content: "Here is a offer for bookable item example",
-                        price: 180000
-                    },
-                    {
-                        title: "Example Bookable item",
-                        content: "Here is a offer for bookable item example",
-                        price: 123
-                    },
-                    {
-                        title: "Example Bookable item",
-                        content: "Here is a offer for bookable item example",
-                        price: 1234
-                    }
-                ]
+                bookables: []
             }
         },
         created() {
-            console.info("Hello world from created lifecycle hook!");
-            setTimeout(() => {
-                this.loading = true;
-            }, 800);
+            const p = new Promise((resolve, reject) => {
+                console.log(resolve);
+                console.log(reject);
+
+                setTimeout(() => {
+                    resolve("Hello")
+                },3000);
+            })
+            .then(result => "hello "+ result)
+            .then(result => console.log(`Success: ${result}`))
+            .catch(result => console.log(`Result: ${result}`));
+
+            console.log(p);
+
+            const request = axios.get("/bookables")
+                .then(response => {
+                    this.bookables = response.data;
+                    this.loading = false
+                });
+            console.log(request);
         }
     }
 
