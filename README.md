@@ -1,4 +1,4 @@
 ## Comands to run
 
-``php artinan serve
+``php artinan serve && 
 npm run hot``
