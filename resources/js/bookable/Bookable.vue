@@ -13,19 +13,24 @@
                     </div>
                 </div>
             </div>
+
+            <ReviewList :bookable-id="this.$route.params.id" />
         </div>
         <div class="col-md-4 pb-4">
-            <availability></availability>
+            <availability :bookable-id="this.$route.params.id" />
         </div>
     </div>
 </template>
 
 <script>
     import Availability from './Availability';
+    import ReviewList from './ReviewList';
     export default {
         components: {
-            Availability
+            Availability,
+            ReviewList
         },
+       
         data() {
             return {
                 bookable: null,
@@ -33,7 +38,6 @@
             }
         },
         created() {
-            console.log(this.$route.params.id);
             axios.get(`/bookables/${this.$route.params.id}`)
                 .then(response => {
                     this.bookable = response.data.data;
