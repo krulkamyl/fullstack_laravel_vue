@@ -10,6 +10,12 @@ class Review extends UuidFactory
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'content',
+        'rating'
+    ]; 
+
     protected $table = 'reviews';
 
     public function bookable() 
