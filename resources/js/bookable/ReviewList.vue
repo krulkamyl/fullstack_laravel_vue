@@ -14,7 +14,7 @@
                         John Smith
                     </div>
                     <div class="col-md-6 d-flex justify-content-end">
-                        <StarRating :rating="review.rating" class="fa-lg"></StarRating>
+                        <StarRating :value="review.rating" class="fa-lg"></StarRating>
                     </div>
                 </div>
                 <div class="row">
