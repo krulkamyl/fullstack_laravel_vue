@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddReviewKeyToBookingsTable extends Migration
+class AddPriceToBookablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddReviewKeyToBookingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->uuid('review_key')->unsigned();
+        Schema::table('bookables', function (Blueprint $table) {
+            $table->unsignedInteger('price');
         });
     }
 
@@ -25,8 +25,8 @@ class AddReviewKeyToBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('review_key');
+        Schema::table('bookables', function (Blueprint $table) {
+            $table->dropColumn('price');
         });
     }
 }

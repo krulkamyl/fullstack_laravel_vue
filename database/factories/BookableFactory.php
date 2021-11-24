@@ -29,7 +29,8 @@ class BookableFactory extends Factory
 
         return [
             'title' => $this->faker->city. ' '. Arr::random($suffix),
-            'description' => $this->faker->text
+            'description' => $this->faker->text,
+            'price' => $this->faker->numberBetween(15, 600)
         ];
     }
 }
