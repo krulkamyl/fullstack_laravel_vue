@@ -35,12 +35,12 @@
     export default {
         mixins: [ValidationErrors],
         props: {
-            bookableId: String
+            bookableId: [String, Number]
         },
         data() {
             return {
-                from: null,
-                to: null,
+                from: this.$store.state.lastSearch.from,
+                to: this.$store.state.lastSearch.to,
                 status: null,
                 loading: false
             }
@@ -61,6 +61,11 @@
             check() {
                 this.loading = true;
                 this.errors = null;
+
+                this.$store.dispatch('setLastSearch', {
+                    from: this.from,
+                    to: this.to
+                });
 
                 axios.get(
                     `/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`

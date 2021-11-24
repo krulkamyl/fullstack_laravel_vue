@@ -54,7 +54,6 @@
                     this.bookables = response.data.data;
                     this.loading = false
                 });
-            console.log(request);
         }
     }
 
