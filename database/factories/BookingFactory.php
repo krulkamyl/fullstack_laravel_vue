@@ -18,7 +18,8 @@ class BookingFactory extends Factory
         $to = (clone $from)->addDays($this->faker->numberBetween(0, 14));
         return [
             'from' => $from,
-            'to' => $to
+            'to' => $to,
+            'price' => $this->faker->numberBetween(200, 5000)
         ];
     }
 }

@@ -89,7 +89,6 @@
                     this.price = (await axios.get(
                         `/bookables/${this.bookable.id}/price?from=${this.lastSearchComputed.from}&to=${this.lastSearchComputed.to}`
                     )).data.data;
-                    console.log(this.price);
                 } catch (err) {
                     console.log(err);
                     this.price = null;
