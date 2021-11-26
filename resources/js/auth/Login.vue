@@ -1,0 +1,74 @@
+<template>
+    <div class="w-50 m-auto">
+        <div class="card card-body">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" placeholder="Enter your e-mail" class="form-control" v-model="email"
+                    :class="[{'is-invalid': this.errorFor('email')}]" />
+                <v-errors :errors="errorFor('email')"></v-errors>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" class="form-control"
+                    v-model="password" :class="[{'is-invalid': this.errorFor('password')}]" />
+                <v-errors :errors="errorFor('password')"></v-errors>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-lg btn-block" :disabled="loading" @click="login">
+                    Login
+                </button>
+            </div>
+
+            <hr />
+
+            <div>
+                No account yet?
+                <router-link :to="{name: 'register'}" class="font-weight-bold">Register</router-link>
+            </div>
+            <div>
+                Forgotten password?
+                <router-link :to="{name: 'home'}" class="font-weight-bold">Reset password</router-link>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<script>
+    import ValidationErrors from '../shared/mixins/ValidationErrors';
+    import { logIn } from './../shared/Utils/auth';
+    export default {
+        mixins: [ValidationErrors],
+        data() {
+            return {
+                loading: false,
+                email: null,
+                password: null
+            }
+        },
+        methods: {
+            async login() {
+                this.loading = true;
+                this.errors = null;
+
+                try {
+                    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie');
+                    await axios.post('http://127.0.0.1:8000/login', {
+                        email: this.email,
+                        password: this.password
+                    });    
+                    logIn();
+
+                    this.$store.dispatch("loadUser");
+                    this.$router.push({name: "home"});
+    
+                } catch (error) {
+                    this.errors = error.response && error.response.data.errors;
+                }
+
+                this.loading = false;
+            }
+        }
+    }
+
+</script>
